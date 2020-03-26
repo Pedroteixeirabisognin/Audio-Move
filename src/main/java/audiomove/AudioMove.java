@@ -24,6 +24,16 @@ public class AudioMove {
 
 	public static void main(String[] args) {
 
+		takeVoice();
+	
+		callSpeechToText();
+		
+	
+	}
+	
+	public static void takeVoice() {
+
+		
 		AudioFormat format = new AudioFormat(16000, 8, 2, true, true);
 		
 		DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
@@ -31,9 +41,9 @@ public class AudioMove {
 		if(!AudioSystem.isLineSupported(info)) {
 			System.out.println("Line is not suported");
 		}
-		
+
 		try {
-			AudioSystem.getLine(info);
+			
 			final TargetDataLine targetDataLine = (TargetDataLine) AudioSystem.getLine(info);
 
 			targetDataLine.open();
@@ -54,7 +64,7 @@ public class AudioMove {
 						try {
 							AudioSystem.write(audioStream, AudioFileFormat.Type.WAVE, wavFile);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
+							
 							e.printStackTrace();
 						}
 	
@@ -74,14 +84,19 @@ public class AudioMove {
 			
 			
 			targetDataLine.close();
-			
+		
 			System.out.println("Ended Record");
 			
 		} catch (LineUnavailableException e) {
 			e.printStackTrace();
 		}
 	
+		
+	}
 	
+	public static void callSpeechToText() {
+		
+		
 		IamAuthenticator authenticator = new IamAuthenticator("jQM01kY1cl-kdTZNdPY-5xxD1Oy2bLfP9TJ-1UY08-5s");
 		SpeechToText speechToText = new SpeechToText(authenticator);
 		speechToText.setServiceUrl("https://api.us-south.speech-to-text.watson.cloud.ibm.com/instances/88a2f24c-d86b-4d3e-8d64-4af1fd6165be");
@@ -91,7 +106,7 @@ public class AudioMove {
 		    .audio(new FileInputStream("C:\\Record\\Record2.wav"))
 		    .contentType("audio/wav")
 		    .model("pt-BR_BroadbandModel")
-		    .keywords(Arrays.asList("rato", "roeu", "roupa"))
+		    .keywords(Arrays.asList("cima", "baixo", "trás","frente"))
 		    .keywordsThreshold((float) 0.5)
 		    .maxAlternatives(7)
 		    .build();
@@ -119,7 +134,6 @@ public class AudioMove {
 		}
 
 		
-	
+		
 	}
-
 }
